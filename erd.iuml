@@ -1,0 +1,122 @@
+@startuml
+' hide the spot
+hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "Zutat" as Zutat {
+  zutat_id : NUMBER <<PK>>
+  --
+  name : VARCHAR2
+}
+
+entity "Inventur" as Inventur {
+  inventur_id : number <<PK>>
+  --
+  name: VARCHAR2
+}
+
+entity "InventurItem" as InventurItem{
+    zutat_id: NUMBER    <<PK, FK>> 
+    inventur_id: NUMBER <<PK, FK>>
+    --
+    ablaufdatum: DATETIME
+    anzahl: NUMBER
+}
+
+entity "Kunde" as Kunde {
+  kunde_id : NUMBER <<PK>>
+  --
+  bestell_id: NUMBER
+  vorname: VARCHAR2
+  nachname: VARCHAR2
+}
+
+entity "Angestellter" as Angestellter{
+    angestellten_id number <<pk>>
+    --
+    vorname: VARCHAR2
+    nachname: VARCHAR2
+    geburtstag: DATETIME
+    gehalt: DECIMAL
+}
+
+entity "Rezept" as Rezept {
+    rezept_id: number <<PK>>
+    --
+    zutat_id: number <<FK>>
+    name: varchar2
+    beschreibung: varchar2
+}
+
+entity "RezeptSchritt" as Schritt {
+    schritt_id: NUMBER <<PK>>
+    --
+    anleitung: VARCHAR2
+}
+
+entity "Kassa" as Kassa {
+    kassa_id: NUMBER <<PK>>
+    --
+    bestell_id: NUMBER <<FK>>
+    einnahmen: DECIMAL
+    datum: DATETIME
+}
+
+entity "Speisekarte" as Speisekarte{
+    speisekarten_id: NUMBER <<PK>>
+    --
+    rezept_id: NUMBER <<FK>>
+    preis: DECIMAL
+    beschreibung: VARCHAR2
+}
+
+entity "Schichtplan" as Schichtplan {
+    schicht_plan_id: NUMBER <<PK>>
+    --
+    angestellten_id: NUMBER <<FK>>
+    beginn: DATETIME
+    ende: DATETIME
+}
+
+entity "Bestellung" as Bestellung {
+    bestell_id: NUMBER <<PK>>
+    --
+    gesamt_preis: DECIMAL
+    kunde_id: NUMBER <<FK>>
+    datum: DATETIME
+}
+
+entity "Lieferung" as Lieferung {
+    liefer_id: NUMBER <<PK>>
+    --
+    bestell_id: NUMBER <<FK>> 
+    angestellten_id: NUMBER <<FK>> 
+    liefer_datum: DATETIME
+    postleitzahl: NUMBER
+    strasse: VARCHAR2
+    adresse: VARCHAR2 
+}
+
+entity "BestellungsItem" as BestellungItem {
+    bestell_id: NUMBER <<FK>>
+    speisekarten_id: NUMBER <<FK>>
+    --
+    anzahl: NUMBER
+    preis: DECIMAL
+}
+
+InventurItem }|--|| Inventur
+Zutat ||--|{ InventurItem
+Rezept }|--|| Zutat
+Schritt ||--|{ Rezept
+Speisekarte ||--|{ Rezept
+Speisekarte ||--o{ BestellungItem
+BestellungItem }|--|| Bestellung
+Bestellung ||--|| Kunde
+Kassa ||--o{ Bestellung
+Bestellung ||--o| Lieferung
+Angestellter ||--|{ Schichtplan
+Lieferung ||--|| Angestellter
+@enduml
