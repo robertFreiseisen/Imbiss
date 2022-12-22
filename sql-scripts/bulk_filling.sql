@@ -6,6 +6,7 @@ v_rezepte NUMBER := 50;
 v_rezept_schritte NUMBER := 100;
 v_zutat NUMBER := 100;
 v_index NUMBER;
+v_kunden NUMBER := 50;
 v_inventur NUMBER := 50;
 v_inventur_item NUMBER := 100;
 v_speise_karte NUMBER := 50;
@@ -13,36 +14,38 @@ v_bestellungen := 50;
 v_kasser NUMBER := 50; 
 
 v_schritt_id NUMBER;
-v_anleitung NUMBER;
+v_kunden_id NUMBER;
+v_bestell_id NUMBER;
+v_kassa_id NUMBER;
 v_rezept_id NUMBER;
 v_zutat_id NUMBER;
-v_index NUMBER;
+v_index_1 NUMBER;
 
-begin
-FOR v_index IN 1 ..  v_rezepte LOOP
+BEGIN
+    FOR v_index IN 1 ..  v_rezepte LOOP
 
 
         v_rezept_id := v_index;
-
-        INSERT INTO Rezept(rezept_id, name, beschreibung) VALUES(v_rezept_id, "Rezept 22", "Ein weiteres leckeres Rezept");
+    
+        INSERT INTO Rezept(rezept_id, name, beschreibung) VALUES(v_rezept_id, 'Rezept', 'Ein weiteres leckeres Rezept');
     
 
-        FOR v_children_produkt_index IN 1 .. v_maxChildren  LOOP
-           
-            v_produkt_name:= 'C'||to_char(v_index)||'_P'||to_char(v_children_produkt_index);
-            v_produkt_time_end:= v_produkt_time;
-            select v_produkt_time+1 into v_produkt_time_end from dual;
-            Insert into product VALUES(
-                v_produkt_id,
-                v_produkt_name,
-                v_index,
-                22,
-                1 ,
-                v_produkt_time,
-                v_produkt_time_end 
-            ); 
-            v_produkt_time:=v_produkt_time_end;
-            v_produkt_id:=v_produkt_id+1; 
+        FOR v_schritt_id IN 1 .. v_rezept_schritte  LOOP
+            INSERT INTO REZEPTSCHRITT(SCHRITT_ID, REZEPT_ID, ANLEITUNG) VALUES (v_schritt_id, v_rezept_id, 'Schneide die Gurke klein her');
         END LOOP;
     END LOOP; 
-end;
+
+    FOR v_kunden_id IN 1 .. v_kunden LOOP
+
+        INSERT INTO KUNDE (KUNDEN_ID, VORNAME, NACHNAME) VALUES(v_kunden_id, 'Max', 'Mustermann');
+
+        FOR v_bestell_id IN 1 .. v_bestellungen LOOP
+            INSERT INTO BESTELLUNG (BESTELL_ID, KUNDEN_ID, ANZAHL, GESAMT_PREIS) VALUES(v_bestell_id, v_kunden_id, 5 , '100.80');
+
+            FOR v_bestell_item_id IN 1 .. 5 LOOP
+                INSERT INTO BESTELLUNGSITEM (BESTELL_ID, SPEISEKARTEN_ID, ANZAHL, PRICE) VALUES (v_bestell_item_id, 2, '11.03');
+            END LOOP;
+        END LOOP;
+
+    END LOOP;
+END;

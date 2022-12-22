@@ -12,7 +12,7 @@ ALTER TABLE InventurItem ADD CONSTRAINT inventuritem_zutat_fk FOREIGN KEY (inven
 
 ------------------Rezept Table------------------
 ALTER TABLE Rezept ADD CONSTRAINT rezept_pk PRIMARY KEY (rezept_id);
-ALTER TABLE Rezept ADD CONSTRAINT rezept_zutat_fk FOREIGN KEY (zutat_id) REFERENCES Zutat(zutat_id) ON DELEDE CASCADE;
+ALTER TABLE Rezept ADD CONSTRAINT rezept_zutat_fk FOREIGN KEY (zutat_id) REFERENCES Zutat(zutat_id) ON DELETE CASCADE;
 -----------------------------------------------
 
 ------------------Rezeptschritt Table------------------
@@ -31,12 +31,12 @@ ALTER TABLE Kunde ADD CONSTRAINT kunde_pk PRIMARY KEY (kunden_id);
 
 ------------------Bestellung Table------------------
 ALTER TABLE Bestellung ADD CONSTRAINT bestellung_pk PRIMARY KEY (bestell_id);
-ALTER TABLE Bestellung ADD CONSTRAINT bestellung_kunde_fk FOREIGN KEY (kunden_id) REFERNCES Kunde(kunden_id);
+ALTER TABLE Bestellung ADD CONSTRAINT bestellung_kunde_fk FOREIGN KEY (kunden_id) REFERENCES Kunde(kunden_id);
 -----------------------------------------------
 
 ------------------BestellungsItem Table------------------
 ALTER TABLE BestellungsItem ADD CONSTRAINT bestellungsitem_bestellung_fk FOREIGN KEY (bestell_id) REFERENCES Bestellung(bestell_id);
-ALTER TABLE BestellungsItem ADD CONSTRAINT bestellungsitem_speisekarten_fk FOREIGN KEY (speisekarten_id) REFERENCES Speisekarte(speisekarten_id);
+ALTER TABLE BestellungsItem ADD CONSTRAINT bestellungsitem_speisekarte_fk FOREIGN KEY (speisekarten_id) REFERENCES Speisekarte(speisekarten_id);
 -----------------------------------------------
 
 ------------------Kassa Table------------------
