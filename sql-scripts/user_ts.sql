@@ -1,0 +1,1 @@
+CREATE USER Imbiss IDENTIFIED BY imbiss;

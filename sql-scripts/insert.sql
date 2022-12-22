@@ -1,8 +1,11 @@
+
+
 INSERT INTO Zutat(zutat_id, name) VALUES(1, "Gurke");
 INSERT INTO Zutat(zutat_id, name) VALUES(2, "Kartoffeln");
 INSERT INTO Zutat(zutat_id, name) VALUES(3, "Mais");
 INSERT INTO Zutat(zutat_id, name) VALUES(4, "Fladenbrot");
 INSERT INTO Zutat(zutat_id, name) VALUES(5, "Joghurt");
+
 
 INSERT INTO Inventur(inventur_id, name) VALUES(1, "Inventur am 01.10.2022");
 INSERT INTO Inventur(inventur_id, name) VALUES(2, "Inventur am 05.10.2022");
